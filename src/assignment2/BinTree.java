@@ -8,58 +8,60 @@ import be.ac.ua.ansymo.adbc.annotations.ensures;
 import be.ac.ua.ansymo.adbc.annotations.invariant;
 import be.ac.ua.ansymo.adbc.annotations.requires;
 
-@invariant ({"$this != null", "$this.id > 0", "$this.size >= 0"})
+@invariant ({"$this.size >= 0"})
 public class BinTree implements BinaryTree {
-	private long id;
-	private int size = 0;
-	private BinTree leftSubTree, rightSubTree = null;
+	public long id;
+	public int size = 0;
+	public BinTree leftSubTree, rightSubTree = null;
 	
+	@ensures ({"$this.hasLeft()==false","$this.hasRight()==false","$this.size >= 0"})
 	public BinTree() {
-		this.id = new Random().nextLong();
+		id = Math.abs(new Random().nextLong());
 	}
 	
+	@requires ({"id!=null"})
+	@ensures ({"$this.hasLeft()==false","$this.hasRight()==false","$this.size >= 0"})
 	public BinTree(long id) {
 		this.id = id;
-		this.size++;
+		size++;
+		//leftSubTree= new BinTree();  remove comment symbols to inject error that will trigger contract 3 to fail
 	}
 
 	@Override
 	public BinTree getLeft() {
-		return this.leftSubTree;
+		return leftSubTree;
 	}
 
 
 	@Override
 	public BinTree getRight() {
-		return this.rightSubTree;
+		return rightSubTree;
 	}
 
-	@requires({"iBinTree != null","$this.leftSubTree.id != $this.iBinTree.id"})
-	@ensures({"$this.leftSubTree != null","$this.leftSubTree == $this.iBinTree"})
+	@requires({"iBinTree != null","$this.hasLeft()==false"})
+	@ensures({"$this.leftSubTree != null","$this.leftSubTree == iBinTree"})
 	@Override
 	public void setLeft(BinTree iBinTree){
-			this.leftSubTree = iBinTree;
-			this.size++;
-		}
+			leftSubTree = iBinTree;
+			size++;
 	}
 
-	@requires({"$this.iBinTree != null","$this.rightSubTree.id != $this.iBinTree.id"})
-	@ensures({"$this.rightSubTree != null","$this.rightSubTree == $this.iBinTree"})
+	@requires({"iBinTree != null","$this.hasRight()==false"})
+	@ensures({"$this.rightSubTree != null","$this.rightSubTree == iBinTree"})
 	@Override
 	public void setRight(BinTree iBinTree) {
-			this.rightSubTree = iBinTree;
-			this.size++;
-		}
+			rightSubTree = iBinTree;
+			size++;
 	}
 
 	@Override
 	public boolean hasLeft() {
-		return (this.leftSubTree != null);
+		return (leftSubTree != null);
 	}
 
 	@Override
 	public boolean hasRight() {
-		return (this.rightSubTree == null);
+		return (rightSubTree != null);
 	}
 
 	/*
@@ -71,7 +73,7 @@ public class BinTree implements BinaryTree {
 	}
 	
 	public boolean isEmpty() {
-		return (!this.hasLeft() || !this.hasRight());
+		return !(hasLeft()||hasRight());
 	}
 	
 	@Override
@@ -97,36 +99,38 @@ public class BinTree implements BinaryTree {
 		                trees.push(root.getLeft());
 		        }
 		    }
-		    
-		    System.out.println("Height: " + height);
 		    return height;
 	}
 	
-	
-	
 	//error injected methods
 	
-	@requires({"iBinTree != null","$this.leftSubTree.id != $this.iBinTree.id"})
-	@ensures({"$this.leftSubTree != null","$this.leftSubTree == $this.iBinTree"})
+	public int sumNodesErr() {
+		size=-1;
+		return size;
+	}
+
+	@requires({"iBinTree != null","$this.hasLeft()==false"})
+	@ensures({"$this.leftSubTree != null","$this.leftSubTree == iBinTree"})
 	public void setLeftErr1(BinTree iBinTree){
 			this.leftSubTree = null;
+			size++;
 	}
 
-	@requires({"iBinTree != null","$this.leftSubTree.id != $this.iBinTree.id"})
-	@ensures({"$this.leftSubTree != null","$this.leftSubTree == $this.iBinTree"})
-	public void setLeftErr2(BinTree iBinTree){
-			this.leftSubTree = new BinTree(0);
+	@requires({"iBinTree != null","$this.hasLeft()==false"})
+	@ensures({"$this.leftSubTree != null","$this.leftSubTree == iBinTree"})
+	public void setLeftErr2(BinTree iBinTree) {
+			this.leftSubTree = new BinTree();
 	}
 
-	@requires({"$this.iBinTree != null","$this.rightSubTree.id != $this.iBinTree.id"})
-	@ensures({"$this.rightSubTree != null","$this.rightSubTree == $this.iBinTree"})
+	@requires({"iBinTree != null","$this.hasRight()==false"})
+	@ensures({"$this.rightSubTree != null","$this.rightSubTree == iBinTree"})
 	public void setRightErr1(BinTree iBinTree){
 			this.rightSubTree = null;
 	}
 
-	@requires({"$this.iBinTree != null","$this.rightSubTree.id != $this.iBinTree.id"})
+	@requires({"iBinTree != null","$this.hasRight()==false"})
 	@ensures({"$this.rightSubTree != null","$this.rightSubTree == iBinTree"})
-	public void setRightErr2(BinTree iBinTree){
-			this.rightSubTree = new BinTree(0);
+	public void setRightErr2(BinTree iBinTree) {
+			this.rightSubTree = new BinTree();
 	}
 }
