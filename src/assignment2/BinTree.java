@@ -37,10 +37,7 @@ public class BinTree implements BinaryTree {
 	@requires({"iBinTree != null","$this.leftSubTree.id != $this.iBinTree.id"})
 	@ensures({"$this.leftSubTree != null","$this.leftSubTree == $this.iBinTree"})
 	@Override
-	public void setLeft(BinTree iBinTree) throws IllegalArgumentException{
-		if(!(iBinTree instanceof BinaryTree) || iBinTree == null)
-			throw new IllegalArgumentException("Passed tree argument is either null or empty.");
-		else {
+	public void setLeft(BinTree iBinTree){
 			this.leftSubTree = iBinTree;
 			this.size++;
 		}
@@ -50,9 +47,6 @@ public class BinTree implements BinaryTree {
 	@ensures({"$this.rightSubTree != null","$this.rightSubTree == $this.iBinTree"})
 	@Override
 	public void setRight(BinTree iBinTree) {
-		if(!(iBinTree instanceof BinaryTree) || iBinTree == null)
-			throw new IllegalArgumentException("Passed tree argument is either null or empty.");
-		else {
 			this.rightSubTree = iBinTree;
 			this.size++;
 		}
