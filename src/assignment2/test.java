@@ -3,6 +3,13 @@ public class test {
 
 	public static void main(String[] args) {
 		
+		/* contract 1 should fail because we have the height(size) as negative number
+		BinTree t1 = new BinTree(0);
+		BinTree t2 = new BinTree(1);
+		t1.setLeft(t2);
+		t1.sumNodesErr();
+		*/
+		
 		/* contract 4 should fail because we are passing null to setLeft()
 		BinTree t1 = new BinTree(0);
 		BinTree t2 = new BinTree(1);
@@ -66,6 +73,7 @@ public class test {
 		BinTree t3 = new BinTree(2);
 		t1.setRightErr2(t2);
 		*/
+		
 
 	}
 }

@@ -1,5 +1,3 @@
-package assignment2;
-
 
 import java.util.Random;
 import java.util.Stack;
@@ -14,17 +12,17 @@ public class BinTree implements BinaryTree {
 	public int size = 0;
 	public BinTree leftSubTree, rightSubTree = null;
 	
-	@ensures ({"$this.hasLeft()==false","$this.hasRight()==false","$this.size >= 0"})
+	@ensures ({"$this.hasLeft()==false","$this.hasRight()==false"})
 	public BinTree() {
 		id = Math.abs(new Random().nextLong());
 	}
 	
 	@requires ({"id!=null"})
-	@ensures ({"$this.hasLeft()==false","$this.hasRight()==false","$this.size >= 0"})
+	@ensures ({"$this.hasLeft()==false","$this.hasRight()==false"})
 	public BinTree(long id) {
 		this.id = id;
 		size++;
-		//leftSubTree= new BinTree();  remove comment symbols to inject error that will trigger contract 3 to fail
+		//leftSubTree= new BinTree(); an error to trigger contract 3, remove the comment symbols to inject the error
 	}
 
 	@Override
@@ -99,16 +97,17 @@ public class BinTree implements BinaryTree {
 		                trees.push(root.getLeft());
 		        }
 		    }
+		    
 		    return height;
 	}
-	
+
 	//error injected methods
 	
 	public int sumNodesErr() {
 		size=-1;
 		return size;
 	}
-
+	
 	@requires({"iBinTree != null","$this.hasLeft()==false"})
 	@ensures({"$this.leftSubTree != null","$this.leftSubTree == iBinTree"})
 	public void setLeftErr1(BinTree iBinTree){
@@ -133,4 +132,5 @@ public class BinTree implements BinaryTree {
 	public void setRightErr2(BinTree iBinTree) {
 			this.rightSubTree = new BinTree();
 	}
+	
 }
