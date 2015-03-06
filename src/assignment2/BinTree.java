@@ -108,37 +108,25 @@ public class BinTree implements BinaryTree {
 	
 	@requires({"iBinTree != null","$this.leftSubTree.id != $this.iBinTree.id"})
 	@ensures({"$this.leftSubTree != null","$this.leftSubTree == $this.iBinTree"})
-	public void setLeftErr1(BinTree iBinTree) throws IllegalArgumentException{
-		if(!(iBinTree instanceof BinaryTree) || iBinTree == null)
-			throw new IllegalArgumentException("Passed tree argument is either null or empty.");
-		else
+	public void setLeftErr1(BinTree iBinTree){
 			this.leftSubTree = null;
 	}
 
 	@requires({"iBinTree != null","$this.leftSubTree.id != $this.iBinTree.id"})
 	@ensures({"$this.leftSubTree != null","$this.leftSubTree == $this.iBinTree"})
-	public void setLeftErr2(BinTree iBinTree) throws IllegalArgumentException{
-		if(!(iBinTree instanceof BinaryTree) || iBinTree == null)
-			throw new IllegalArgumentException("Passed tree argument is either null or empty.");
-		else
+	public void setLeftErr2(BinTree iBinTree){
 			this.leftSubTree = new BinTree(0);
 	}
 
 	@requires({"$this.iBinTree != null","$this.rightSubTree.id != $this.iBinTree.id"})
 	@ensures({"$this.rightSubTree != null","$this.rightSubTree == $this.iBinTree"})
-	public void setRightErr1(BinTree iBinTree) throws IllegalArgumentException{
-		if(!(iBinTree instanceof BinaryTree) || iBinTree == null)
-			throw new IllegalArgumentException("Passed tree argument is either null or empty.");
-		else
+	public void setRightErr1(BinTree iBinTree){
 			this.rightSubTree = null;
 	}
 
 	@requires({"$this.iBinTree != null","$this.rightSubTree.id != $this.iBinTree.id"})
 	@ensures({"$this.rightSubTree != null","$this.rightSubTree == iBinTree"})
-	public void setRightErr2(BinTree iBinTree) throws IllegalArgumentException{
-		if(!(iBinTree instanceof BinaryTree) || iBinTree == null)
-			throw new IllegalArgumentException("Passed tree argument is either null or empty.");
-		else
+	public void setRightErr2(BinTree iBinTree){
 			this.rightSubTree = new BinTree(0);
 	}
 }
